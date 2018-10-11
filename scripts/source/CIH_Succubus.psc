@@ -1,10 +1,8 @@
 Scriptname CIH_Succubus extends Quest Hidden
 
-PlayerVampireQuestScript VampireQuest
 CIH_MCM MCM
 
 Event OnInit()
-	VampireQuest = Quest.GetQuest("PlayerVampireQuest") as PlayerVampireQuestScript
 	MCM = Quest.GetQuest("CIH_CreaturesInHeatQuest") as CIH_MCM
 EndEvent
 
