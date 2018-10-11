@@ -15,17 +15,7 @@ bool Function isWerewolf()
 EndFunction
 
 Int Function GetCurrentMoonphase()
-	Int GameDayPassed
-	Int GameHoursPassed
-	Int PhaseTest
-	GameDayPassed = GetPassedGameDays()
-	GameHoursPassed = GetPassedGameHours()
- 
-	If (GameHoursPassed >= 12.0)
-		GameDayPassed += 1
-	EndIf
- 
-	PhaseTest = GameDayPassed % 24 ;A full cycle through the moon phases lasts 24 days
+	Int PhaseTest = GetCurrentDay()
 
 	If PhaseTest >= 22 || PhaseTest == 0
 		Return 7
@@ -49,7 +39,8 @@ EndFunction
 Int Function GetCurrentDay()
 	Int GameDayPassed
 	Int GameHoursPassed
-	Int PhaseTest
+	Int CurrentDay
+	
 	GameDayPassed = GetPassedGameDays()
 	GameHoursPassed = GetPassedGameHours()
  
@@ -57,9 +48,9 @@ Int Function GetCurrentDay()
 		GameDayPassed += 1
 	EndIf
  
-	PhaseTest = GameDayPassed % 24 ;A full cycle through the moon phases lasts 24 days
+	CurrentDay = GameDayPassed % 24 ;A full cycle through the moon phases lasts 24 days
 
-	 Return PhaseTest
+	Return CurrentDay
 EndFunction
 
 Int Function GetPassedGameHours()

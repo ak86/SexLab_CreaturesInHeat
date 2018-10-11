@@ -36,19 +36,21 @@ endFunction
 int function TimerWerewolf()
 	int heat = 0
 	if W.isWerewolf() && MCM.enableWerewolf
-		int phase = W.GetCurrentMoonphase()
+		int day = W.GetCurrentDay()
 
+		;A full cycle through the moon phases lasts 24 days
 		;fool moon, max arousal gen
-		if phase == 0
+		if day < 4
 			;SexLabArousedunlock
 			heat = 10
 			;after fool moon, reduce arousal gen
-		elseif phase == 1
-			heat = 7 - W.GetCurrentDay()
+		elseif day < 7
+			heat = 7 - day
 			;befor fool moon, increase arousal gen
-		elseif phase == 7
-			heat = W.GetCurrentDay() - 21
+		elseif day >= 22
+			heat = day - 21
 		elseif SexLabArousedlocked
+		;maybe add later or not
 		;SexLabArousedlocked unlock
 		endif
 	endif
