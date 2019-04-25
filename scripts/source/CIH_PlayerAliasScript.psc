@@ -154,7 +154,7 @@ EndFunction
 Event OnSexLabOrgasm(String _eventName, String _args, Float _argc, Form _sender)
 	sslThreadController controller = MCM.SexLab.GetController(_argc as int)
 
-	if controller.HasPlayer && !MCM.SexLab.config.SeparateOrgasms
+	if controller.HasPlayer && !(MCM.SexLab.config.SeparateOrgasms && Game.GetModbyName("SLSO.esp") != 255)
 		CumCount = CumCount + (controller.ActorAlias.Length - 1) * MCM.SuccubusEnergyGainPerOrgasm
 	endif
 EndEvent
