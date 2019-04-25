@@ -11,6 +11,24 @@ bool property enableSuccubus = True auto
 bool property isSuccubus = False auto
 bool property sqrt = True auto
 
+bool property enableCustomWerewolf = False auto
+int property customNewMoon = 0 Auto
+int property customWaxingCrescent = 1 Auto
+int property customFirstQuarter = 2 Auto
+int property customWaxingGibbous = 4 Auto
+int property customFullMoon = 8 Auto
+int property customWaningGibbous = 4 Auto
+int property customThirdQuarter = 2 Auto
+int property customWaningCrescent = 1 Auto
+int property customNewMoonDefault = 0 Auto
+int property customWaxingCrescentDefault = 1 Auto
+int property customFirstQuarterDefault = 2 Auto
+int property customWaxingGibbousDefault = 4 Auto
+int property customFullMoonDefault = 8 Auto
+int property customWaningGibbousDefault = 4 Auto
+int property customThirdQuarterDefault = 2 Auto
+int property customWaningCrescentDefault = 1 Auto
+
 int property SuccubusEnergyDrainPerHour = 50 auto
 int property SuccubusEnergyGainPerOrgasm = 100 auto
 
@@ -75,41 +93,52 @@ endfunction
 
 function Page_Werewolf()
 	SetCursorFillMode(TOP_TO_BOTTOM)
-		AddTextOption("$CIH_Phases_of_the_Moon" , "", OPTION_FLAG_DISABLED)
-		AddEmptyOption()
-		AddTextOption("$CIH_New_moon" ,"10-12", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_Waxing_crescent" ,"13-15", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_First_quarter" ,"16-18", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_Waxing_gibbous" ,"19-21", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_Full_moon" , "22-24", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_Waning_gibbous" ,"1-3", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_Third_quarter" ,"4-6", OPTION_FLAG_DISABLED)
-		AddTextOption("$CIH_Waning_crescent" ,"7-9", OPTION_FLAG_DISABLED)
-
-	SetCursorPosition(1)
 		AddTextOption("$CIH_Curr_Phase_of_the_Moon" , "$CIH_Curr_Day", OPTION_FLAG_DISABLED)
-		AddEmptyOption()
 		int CurrentDay = (Quest.GetQuest("CIH_CreaturesInHeatQuest") as CIH_Werewolf).GetCurrentDay()
 		If CurrentDay >= 22 || CurrentDay == 0
-			AddTextOption("$CIH_Full_moon" , CurrentDay)
-		ElseIf CurrentDay < 4
-			AddTextOption("$CIH_Waning_gibbous" , CurrentDay)
-		ElseIf CurrentDay < 7
-			AddTextOption("$CIH_Third_quarter" , CurrentDay)
-		ElseIf CurrentDay < 10
-			AddTextOption("$CIH_Waning_crescent" , CurrentDay)
-		ElseIF CurrentDay < 13
-			AddTextOption("$CIH_New_moon" , CurrentDay)
-		ElseIf CurrentDay < 16
-			AddTextOption("$CIH_Waxing_crescent" , CurrentDay)
-		ElseIf CurrentDay < 19
-			AddTextOption("$CIH_First_quarter" , CurrentDay)
-		ElseIf CurrentDay < 22
 			AddTextOption("$CIH_Waxing_gibbous" , CurrentDay)
+		ElseIf CurrentDay < 4
+			AddTextOption("$CIH_Full_moon" , CurrentDay)
+		ElseIf CurrentDay < 7
+			AddTextOption("$CIH_Waning_gibbous" , CurrentDay)
+		ElseIf CurrentDay < 10
+			AddTextOption("$CIH_Third_quarter" , CurrentDay)
+		ElseIF CurrentDay < 13
+			AddTextOption("$CIH_Waning_crescent" , CurrentDay)
+		ElseIf CurrentDay < 16
+			AddTextOption("$CIH_New_moon" , CurrentDay)
+		ElseIf CurrentDay < 19
+			AddTextOption("$CIH_Waxing_crescent" , CurrentDay)
+		ElseIf CurrentDay < 22
+			AddTextOption("$CIH_First_quarter" , CurrentDay)
 		EndIf
+
+		AddEmptyOption()
+		AddTextOption("$CIH_New_moon" ,"13-15", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_Waxing_crescent" ,"16-18", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_First_quarter" ,"19-21", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_Waxing_gibbous" ,"22-24", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_Full_moon" , "1-3", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_Waning_gibbous" ,"4-6", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_Third_quarter" ,"7-9", OPTION_FLAG_DISABLED)
+		AddTextOption("$CIH_Waning_crescent" ,"10-12", OPTION_FLAG_DISABLED)
+		AddEmptyOption()
+
+	SetCursorPosition(1)
+		AddToggleOptionST("enableCustomWerewolf_T", "$CIH_enableCustomWerewolf", enableCustomWerewolf)
 		AddTextOption("$CIH_heat_per_hour" , (self.GetAlias(0) as CIH_PlayerAliasScript).TimerWerewolf())
 		AddEmptyOption()
-		
+
+		AddSliderOptionST("CustomWerewolfNewMoon_S", "$CIH_New_Moon", customNewMoon, "{0}")
+		AddSliderOptionST("CustomWerewolfWaxingCrescent_S", "$CIH_Waxing_Crescent", customWaxingCrescent, "{0}")
+		AddSliderOptionST("CustomWerewolfFirstQuarter_S", "$CIH_First_Quarter", customFirstQuarter, "{0}")
+		AddSliderOptionST("CustomWerewolfWaxingGibbous_S", "$CIH_Waxing_Gibbous", customWaxingGibbous, "{0}")
+		AddSliderOptionST("CustomWerewolfFullMoon_S", "$CIH_Full_Moon", customFullMoon, "{0}")
+		AddSliderOptionST("CustomWerewolfWaningGibbous_S", "$CIH_Waning_Gibbous", customWaningGibbous, "{0}")
+		AddSliderOptionST("CustomWerewolfWaningQuarter_S", "$CIH_Third_Quarter", customThirdQuarter, "{0}")
+		AddSliderOptionST("CustomWerewolfWaningCrescent_S", "$CIH_Waning_Crescent", customWaningCrescent, "{0}")
+
+		AddEmptyOption()
 endfunction	
 
 function Page_Vampire()
@@ -221,6 +250,21 @@ state isSuccubus_T
 	endEvent
 endState
 
+state enableCustomWerewolf_T
+	event OnSelectST()
+		if enableCustomWerewolf
+			enableCustomWerewolf = false
+		else
+			enableCustomWerewolf = true
+		EndIf
+		SetToggleOptionValueST(enableCustomWerewolf)
+		ForcePageReset()
+	endEvent
+	event OnHighlightST()
+		SetInfoText("$CIH_enableCustomWerewolf_Higlight")
+	endEvent
+endState
+
 ;=============================================================
 ;Sliders
 ;=============================================================
@@ -261,3 +305,122 @@ state SuccubusEnergyGainPerOrgasm_S
 	endEvent
 endState
 
+state CustomWerewolfNewMoon_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customNewMoon)
+		SetSliderDialogDefaultValue(customNewMoonDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customNewMoon = value as Int
+		SetSliderOptionValueST(customNewMoon, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfWaxingCrescent_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customWaxingCrescent)
+		SetSliderDialogDefaultValue(customWaxingCrescentDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customWaxingCrescent = value as Int
+		SetSliderOptionValueST(customWaxingCrescent, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfFirstQuarter_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customFirstQuarter)
+		SetSliderDialogDefaultValue(customFirstQuarterDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customFirstQuarter = value as Int
+		SetSliderOptionValueST(customFirstQuarter, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfWaxingGibbous_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customWaxingGibbous)
+		SetSliderDialogDefaultValue(customWaxingGibbousDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customWaxingGibbous = value as Int
+		SetSliderOptionValueST(customWaxingGibbous, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfFullMoon_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customFullMoon)
+		SetSliderDialogDefaultValue(customFullMoonDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customFullMoon = value as Int
+		SetSliderOptionValueST(customFullMoon, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfWaningGibbous_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customWaningGibbous)
+		SetSliderDialogDefaultValue(customWaningGibbousDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customWaningGibbous = value as Int
+		SetSliderOptionValueST(customWaningGibbous, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfWaningQuarter_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customFirstQuarter)
+		SetSliderDialogDefaultValue(customFirstQuarterDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customFirstQuarter = value as Int
+		SetSliderOptionValueST(customFirstQuarter, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState
+
+state CustomWerewolfWaningCrescent_S
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(customWaningCrescent)
+		SetSliderDialogDefaultValue(customWaningCrescentDefault)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(1)
+	EndEvent
+
+	event OnSliderAcceptST(float value)
+		customWaningCrescent = value as Int
+		SetSliderOptionValueST(customWaningCrescent, "{0}")
+		ForcePageReset()
+	EndEvent
+EndState

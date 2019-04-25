@@ -34,23 +34,62 @@ function Maintenance()
 endFunction
 
 int function TimerWerewolf()
+	if MCM.enableCustomWerewolf
+		return TimerWerewolfCustom()
+	Else
+		return TimerWerewolfDefault()
+	EndIf
+endFunction
+
+int function TimerWerewolfDefault()
 	int heat = 0
 	if W.isWerewolf() && MCM.enableWerewolf
-		int day = W.GetCurrentDay()
+		int phase = W.GetCurrentMoonphase()
 
-		;A full cycle through the moon phases lasts 24 days
 		;fool moon, max arousal gen
-		if day < 4
+		if phase == 0
 			;SexLabArousedunlock
 			heat = 10
 			;after fool moon, reduce arousal gen
-		elseif day < 7
-			heat = 7 - day
+		elseif phase == 1
+			heat = 7 - W.GetCurrentDay()
 			;befor fool moon, increase arousal gen
-		elseif day >= 22
-			heat = day - 21
+		elseif phase == 7
+			heat = W.GetCurrentDay() - 21
 		elseif SexLabArousedlocked
-		;maybe add later or not
+		;SexLabArousedlocked unlock
+		endif
+	endif
+	
+	if MCM.sqrt
+		heat = heat * heat
+	endif
+	return heat
+endFunction
+
+
+int function TimerWerewolfCustom()
+	int heat = 0
+	if W.isWerewolf() && MCM.enableWerewolf
+		int phase = W.GetCurrentMoonphase()
+
+		if phase == 0
+			heat = MCM.customFullMoon
+		elseif phase == 1
+			heat = MCM.customWaningGibbous
+		elseif phase == 2
+			heat = MCM.customThirdQuarter
+		elseif phase == 3
+			heat = MCM.customWaningCrescent
+		elseif phase == 4
+			heat = MCM.customNewMoon
+		elseif phase == 5
+			heat = MCM.customWaxingCrescent
+		elseif phase == 6
+			heat = MCM.customFirstQuarter
+		elseif phase == 7
+			heat = MCM.customWaxingGibbous
+		elseif SexLabArousedlocked
 		;SexLabArousedlocked unlock
 		endif
 	endif
