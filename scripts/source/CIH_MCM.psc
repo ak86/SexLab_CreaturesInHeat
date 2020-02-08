@@ -397,15 +397,15 @@ EndState
 
 state CustomWerewolfWaningQuarter_S
 	event OnSliderOpenST()
-		SetSliderDialogStartValue(customFirstQuarter)
-		SetSliderDialogDefaultValue(customFirstQuarterDefault)
+		SetSliderDialogStartValue(customThirdQuarter)
+		SetSliderDialogDefaultValue(customThirdQuarterDefault)
 		SetSliderDialogRange(0, 100)
 		SetSliderDialogInterval(1)
 	EndEvent
 
 	event OnSliderAcceptST(float value)
-		customFirstQuarter = value as Int
-		SetSliderOptionValueST(customFirstQuarter, "{0}")
+		customThirdQuarter = value as Int
+		SetSliderOptionValueST(customThirdQuarter, "{0}")
 		ForcePageReset()
 	EndEvent
 EndState
